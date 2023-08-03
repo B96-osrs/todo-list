@@ -1,0 +1,26 @@
+:root {
+    --primary:#1f2937;
+    --secondary:#C9A959;
+    --myGrey:#CFCECA;
+
+}
+
+
+body {
+    box-sizing: border-box;
+    height: 100vh;
+    margin: 0;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+}
+
+.sidebar {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary);
+    color: var(--secondary);
+}
