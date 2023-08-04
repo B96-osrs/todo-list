@@ -42,3 +42,11 @@ body {
 .project-list {
     font-size: 18px;
 }
+
+.todo-card {
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    padding: 12px;
+    width: max-content;
+}
