@@ -50,3 +50,7 @@ body {
     padding: 12px;
     width: max-content;
 }
+.project-title {
+    font-size: 24px;
+    font-weight: bold;
+}
