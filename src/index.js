@@ -2,9 +2,10 @@ import {Project} from "./project";
 import {toDo} from ".//todo";
 import {displayController} from "./displayController";
 import "./style.css";
-
+const contentBox = document.querySelector(".content");
 const projectListBox = document.querySelector(".project-list");
 const mainContainer = document.querySelector(".main-container");
+const createProjectButton = document.getElementById("project-button");
 let projectArray = [];
 
 
@@ -43,6 +44,25 @@ window.addEventListener("click",function(e) {
         displayController.displayProjectHeader(mainContainer,projectArray[num]);
         displayController.displayTodoItems(mainContainer,projectArray[num]);
     }
+});
 
+createProjectButton.addEventListener("click", function(e) {
+    console.log("new project clicked");
+    displayController.showProjectModal(contentBox);
+
+    const submitProjectButton = document.getElementById("submit-button");
+    submitProjectButton.addEventListener("click", function(e) {
+        let projectNameInput = document.getElementById("project-input");
+        if(projectNameInput.value === "") {
+            console.log("empty field");
+        }
+        else {
+        projectArray.push(Project(projectNameInput.value));
+        console.log(projectArray);
+        displayController.displayProjectList(projectListBox, projectArray);
+        displayController.hideProjectModal();
+        }
+    });
 
 });
+
