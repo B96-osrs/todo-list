@@ -6,7 +6,6 @@ const contentBox = document.querySelector(".content");
 const projectListBox = document.querySelector(".project-list");
 const mainContainer = document.querySelector(".main-container");
 const createProjectButton = document.getElementById("project-button");
-let deleteProjectButton = document.querySelector(".delete-button");
 let projectArray = [];
 let currentProject = 0;
 
@@ -27,8 +26,6 @@ projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airp
 displayController.displayProjectList(projectListBox, projectArray);
 displayController.displayProjectHeader(mainContainer,projectArray[0]);
 displayController.displayTodoItems(mainContainer,projectArray[0]);
-deleteProjectButton = document.querySelector(".delete-button");
-console.log(deleteProjectButton);
 
 
 
@@ -42,8 +39,6 @@ window.addEventListener("click",function(e) {
         displayController.displayTodoItems(mainContainer,projectArray[num]);
         currentProject = num;
         console.log("current project index: " + currentProject);
-        // deleteProjectButton = document.querySelector(".delete-button");
-        console.log(deleteProjectButton);
     }
 });
 
@@ -72,28 +67,15 @@ createProjectButton.addEventListener("click", function(e) {
     });
 });
 
-    deleteProjectButton.addEventListener("click", function(e) {
-        console.log("deleteprojectbutton eventlistener")
+mainContainer.addEventListener("click",function(e) {
+    if(e.target.matches(".delete-button")) {
         projectArray.splice(currentProject,1);
-        console.log(deleteProjectButton);
         console.log(projectArray);
         currentProject = 0;
         displayController.clearCurrentProject(mainContainer);
         displayController.displayProjectList(projectListBox,projectArray);
         displayController.displayProjectHeader(mainContainer, projectArray[currentProject]);
         displayController.displayTodoItems(mainContainer,projectArray[currentProject]);
-    });
-
-
-// deleteProjectButton.addEventListener("click", function(e) {
-//     projectArray.splice(currentProject,1);
-//     console.log(deleteProjectButton);
-
-//     console.log(projectArray);
-//     currentProject = 0;
-//     displayController.clearCurrentProject(mainContainer);
-//     displayController.displayProjectList(projectListBox,projectArray);
-//     displayController.displayProjectHeader(mainContainer, projectArray[currentProject]);
-//     displayController.displayTodoItems(mainContainer,projectArray[currentProject]);
-// });
+    }
+});
 
