@@ -60,7 +60,7 @@ const displayController = (function() {
         projectName.textContent = project.name;
 
         let projectDeleteButton = document.createElement("button");
-        projectDeleteButton.setAttribute("id","delete-button");
+        projectDeleteButton.classList.add("delete-button");
         projectDeleteButton.textContent = "Delete Project";
 
         let projectAddTodoButton = document.createElement("button");
