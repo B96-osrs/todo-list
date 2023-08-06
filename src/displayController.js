@@ -1,3 +1,8 @@
+import imageTrash from "./img/trash.svg";
+import imageCheckBox from "./img/checkBox.svg";
+import format, { endOfDay } from 'date-fns'
+
+
 const displayController = (function() {
 
     function displayProjectList(parent, projectArray) {
@@ -16,38 +21,70 @@ const displayController = (function() {
         let cardContainer = document.createElement("div");
         cardContainer.classList.add("card-container");
         parent.appendChild(cardContainer);
+        let todoCardIndex = 0;
 
         project.todoArray.forEach(element => {
 
             let todoCard = document.createElement("div");
             todoCard.classList.add("todo-card");
+            todoCard.setAttribute("data-key", todoCardIndex);
             cardContainer.appendChild(todoCard);
 
-            createTodoElements(todoCard,element);
+            createTodoItem(todoCard,element);
+            todoCardIndex++;
+            console.log("element priority: " + element.priority);
+            if(element.priority === "High") {
+                todoCard.style.borderColor = "red";
+            }
+            else if (element.priority === "Low") {
+                todoCard.style.borderColor = "orange";
+            }
+
+            if(element.checkBox === "true") {
+                todoCard.style.borderColor = "green";
+            }
 
         });
     }
 
 
-    function createTodoElements(parent,element) {
+    function createTodoItem(parent,todoItem) {
         let todoTitle = document.createElement("div");
-        todoTitle.textContent = element.title;
+        todoTitle.textContent = todoItem.title;
 
         let todoDescription = document.createElement("div");
-        todoDescription.textContent = element.description;
+        todoDescription.textContent = todoItem.description;
 
         let todoDueDate = document.createElement("div");
-        todoDueDate.textContent = element.dueDate;
+        todoDueDate.textContent = todoItem.dueDate;
         let todoPriority = document.createElement("div");
-        todoPriority.textContent = element.priority;
-        let todoCheckbox = document.createElement("div");
-        todoCheckbox.textContent = element.checkBox;
+        todoPriority.textContent = todoItem.priority;
+
+        let iconDiv = document.createElement("div");
+
+        let todoCheckIcon = document.createElement("img");
+        todoCheckIcon.classList.add("icon");
+        todoCheckIcon.setAttribute("id", "todo-check");
+        todoCheckIcon.setAttribute("data-key",parent.dataset.key);
+        todoCheckIcon.src = imageCheckBox;
+
+        let todoTrashIcon = document.createElement("img");
+        todoTrashIcon.classList.add("icon");
+        todoTrashIcon.setAttribute("id","todo-delete");
+        todoTrashIcon.setAttribute("data-key",parent.dataset.key);
+
+        todoTrashIcon.src = imageTrash;
+        iconDiv.appendChild(todoCheckIcon);
+        iconDiv.appendChild(todoTrashIcon);
+
+        
 
         parent.appendChild(todoTitle);
         parent.appendChild(todoDescription);
         parent.appendChild(todoDueDate);
         parent.appendChild(todoPriority);
-        parent.appendChild(todoCheckbox);
+        parent.appendChild(iconDiv);
+
     }
 
     function displayProjectHeader(parent, project) {
@@ -69,7 +106,9 @@ const displayController = (function() {
 
 
         projectHeader.appendChild(projectName);
-        projectHeader.appendChild(projectDeleteButton);
+        if(!(project.name === "General")) {
+            projectHeader.appendChild(projectDeleteButton);
+        }
         projectHeader.appendChild(projectAddTodoButton);
 
     }
@@ -100,14 +139,78 @@ const displayController = (function() {
         projectModal.appendChild(projectSubmitButton);
     }
 
+    function showTodoItemModal(parent) {
+        let todoModal = document.createElement("div");
+        todoModal.setAttribute("id","todo-form");
+        parent.appendChild(todoModal);
 
-    function hideProjectModal() {
+        let todoTitleLabel = document.createElement("label");
+        todoTitleLabel.setAttribute("for", "todo-title");
+        todoTitleLabel.textContent = "Title";
+        let todoTitle = document.createElement("input");
+        todoTitle.setAttribute("type", "text");
+        todoTitle.setAttribute("id", "todo-title");
+
+        let todoDescriptionLabel = document.createElement("label");
+        todoDescriptionLabel.setAttribute("for", "todo-description");
+        todoDescriptionLabel.textContent = "Description";
+        let todoDescription = document.createElement("input");
+        todoDescription.setAttribute("type", "text");
+        todoDescription.setAttribute("id", "todo-description");
+
+        let todoDueDateLabel = document.createElement("label");
+        todoDueDateLabel.setAttribute("for", "todo-date");
+        todoDueDateLabel.textContent = "Due Date";
+        let todoDueDate = document.createElement("input");
+        todoDueDate.setAttribute("type", "date");
+        todoDueDate.setAttribute("id", "todo-date");
+        todoDueDate.setAttribute("value","2024-01-01");
+
+
+        let todoPriorityLabel = document.createElement("label");
+        todoPriorityLabel.setAttribute("for", "todo-priority");
+        todoPriorityLabel.textContent = "Priority";
+        let todoPriority = document.createElement("select");
+        todoPriority.setAttribute("id", "todo-priority");
+        let optionLow = document.createElement("option");
+        todoPriority.appendChild(optionLow);
+        optionLow.textContent = "Low";
+        let optionHigh = document.createElement("option");
+        optionHigh.textContent = "High"
+        todoPriority.appendChild(optionHigh);
+
+
+        let todoSubmitButton = document.createElement("button");
+        todoSubmitButton.setAttribute("id", "submit-button");
+        todoSubmitButton.textContent = "Add Todo";
+
+        todoModal.appendChild(todoTitleLabel);
+        todoModal.appendChild(todoTitle);
+        todoModal.appendChild(todoDescriptionLabel);
+        todoModal.appendChild(todoDescription);
+        todoModal.appendChild(todoDueDateLabel);
+        todoModal.appendChild(todoDueDate);
+        todoModal.appendChild(todoPriorityLabel);
+        todoModal.appendChild(todoPriority);
+        todoModal.appendChild(todoSubmitButton);
+    }
+
+
+    function hidePopup() {
        let contentBox = document.querySelector(".content");
         contentBox.removeChild(contentBox.lastChild);
     }
 
+    function updateMainContainer(parent, project) {
+        clearCurrentProject(parent);
+        displayProjectHeader(parent,project);
+        displayTodoItems(parent,project);
 
-    return {displayProjectList, displayTodoItems, displayProjectHeader,clearCurrentProject, showProjectModal, hideProjectModal};
+        console.log("maincontainer updated");
+    }
+
+
+    return {displayProjectList, showProjectModal,showTodoItemModal, hidePopup, updateMainContainer};
 })();
 
 

@@ -11,21 +11,20 @@ let currentProject = 0;
 
 
 console.log("start:");
-projectArray[0] = Project("Odin");
+projectArray[0] = Project("General");
 projectArray[1] = Project("Loki");
 projectArray[2] = Project("Freya");
 
 
 
-projectArray[0].todoArray[0] = toDo("Homework","Do the coding assignment from TOP", "15.07.2023","high");
-projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","high");
-projectArray[1].todoArray[0] = toDo("Reading","Read article xzy", "15.11.2024","low");
-projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport", "11.08.2023","high");
+projectArray[0].todoArray[0] = toDo("Homework","Do the coding assignment from TOP", "15.07.2023","High");
+projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","High");
+projectArray[1].todoArray[0] = toDo("Reading","Read article xzy", "15.11.2024","Low");
+projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport", "11.08.2023","High");
 
 
 displayController.displayProjectList(projectListBox, projectArray);
-displayController.displayProjectHeader(mainContainer,projectArray[0]);
-displayController.displayTodoItems(mainContainer,projectArray[0]);
+displayController.updateMainContainer(mainContainer,projectArray[0]);
 
 
 
@@ -34,9 +33,8 @@ displayController.displayTodoItems(mainContainer,projectArray[0]);
 window.addEventListener("click",function(e) {
     if(e.target.matches(".project")) {
         let num = parseInt(e.target.dataset.key);
-        displayController.clearCurrentProject(mainContainer);
-        displayController.displayProjectHeader(mainContainer,projectArray[num]);
-        displayController.displayTodoItems(mainContainer,projectArray[num]);
+        displayController.updateMainContainer(mainContainer,projectArray[num]);
+        console.log("xyz: " + projectArray[currentProject]);
         currentProject = num;
         console.log("current project index: " + currentProject);
     }
@@ -50,17 +48,15 @@ createProjectButton.addEventListener("click", function(e) {
     submitProjectButton.addEventListener("click", function(e) {
         let projectNameInput = document.getElementById("project-input");
         if(projectNameInput.value === "") {
-            console.log("empty field");
+            showErrorMessage("project");
         }
         else {
         projectArray.push(Project(projectNameInput.value));
         console.log(projectArray);
         currentProject = projectArray.length - 1;
-        displayController.clearCurrentProject(mainContainer);
         displayController.displayProjectList(projectListBox, projectArray);
-        displayController.displayProjectHeader(mainContainer, projectArray[currentProject]);
-        displayController.displayTodoItems(mainContainer,projectArray[currentProject]);
-        displayController.hideProjectModal();
+        displayController.updateMainContainer(mainContainer, projectArray[currentProject]);
+        displayController.hidePopup();
         console.log("current project index: " + currentProject);
         
         }
@@ -69,13 +65,75 @@ createProjectButton.addEventListener("click", function(e) {
 
 mainContainer.addEventListener("click",function(e) {
     if(e.target.matches(".delete-button")) {
-        projectArray.splice(currentProject,1);
-        console.log(projectArray);
-        currentProject = 0;
-        displayController.clearCurrentProject(mainContainer);
-        displayController.displayProjectList(projectListBox,projectArray);
-        displayController.displayProjectHeader(mainContainer, projectArray[currentProject]);
-        displayController.displayTodoItems(mainContainer,projectArray[currentProject]);
+        if(currentProject > 0) {
+            projectArray.splice(currentProject,1);
+            console.log(projectArray);
+            currentProject = 0;
+            displayController.displayProjectList(projectListBox,projectArray);
+            displayController.updateMainContainer(mainContainer,projectArray[currentProject]);
+        }
     }
 });
 
+mainContainer.addEventListener("click",function(e) {
+    if(e.target.matches("#add-todo-button")) {
+        displayController.showTodoItemModal(contentBox);
+        const submitProjectButton = document.getElementById("submit-button");
+
+        submitProjectButton.addEventListener("click", function(e) {
+            addTodoItem();
+            displayController.hidePopup();
+            displayController.updateMainContainer(mainContainer, projectArray[currentProject]);
+        });
+    }
+
+});
+
+mainContainer.addEventListener("click", function(e) {
+    if(e.target.matches("#todo-delete")) {
+        let index = parseInt(e.target.dataset.key);
+        projectArray[currentProject].todoArray.splice(index,1);
+        displayController.updateMainContainer(mainContainer,projectArray[currentProject]);
+    }
+    else if(e.target.matches("#todo-check")) {
+        let index = parseInt(e.target.dataset.key);
+        if((projectArray[currentProject].todoArray[index].checkBox).toString() === "false") {
+            projectArray[currentProject].todoArray[index].checkBox = "true";
+        }
+        else {
+            projectArray[currentProject].todoArray[index].checkBox = "false";
+        }
+        displayController.updateMainContainer(mainContainer,projectArray[currentProject]);
+    }
+
+
+});
+
+
+
+function addTodoItem() {
+    let inputTitle = document.getElementById("todo-title").value;
+    let inputDescription = document.getElementById("todo-description").value;
+    let inputDueDate = document.getElementById("todo-date").value;
+    let inputPriority = document.getElementById("todo-priority").value;
+
+    let newTodoItem = toDo(inputTitle,inputDescription,inputDueDate,inputPriority);
+    projectArray[currentProject].todoArray.push(newTodoItem);
+}
+
+function showErrorMessage(element) {
+    let modal = document.querySelector(".project-form");
+    let errorMessage = document.createElement("div");
+    errorMessage.setAttribute("style", "font-size: 0.8em; color:#ff0000;");
+    if(element === "project") {
+        errorMessage.textContent = "Please enter Project Name";
+    }
+
+    else if(element === "todo") {
+        errorMessage.textContent = "Please fill out all fields";
+    }
+    else {
+        errorMessage.textContent = "Error";
+    }
+    modal.appendChild(errorMessage);
+}

@@ -9,6 +9,7 @@
   "author": "B96",
   "license": "ISC",
   "dependencies": {
+    "date-fns": "^2.30.0",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },
