@@ -84,6 +84,7 @@ body {
 
 .project-header {
     display: flex;
+    background-color: #C9A959;
 }
 .project-title {
     margin-right: auto;

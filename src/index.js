@@ -18,7 +18,7 @@ projectArray[2] = Project("Freya");
 
 
 projectArray[0].todoArray[0] = toDo("Homework","Do the coding assignment from TOP", "15.07.2023","High");
-projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","High");
+projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","Low");
 projectArray[1].todoArray[0] = toDo("Reading","Read article xzy", "15.11.2024","Low");
 projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport", "11.08.2023","High");
 
