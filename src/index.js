@@ -22,12 +22,11 @@ if(localStorage.length < 1) {
     projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","low");
     projectArray[1].todoArray[0] = toDo("Reading","Read article xzy", "15.11.2024","low");
     projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport", "11.08.2023","high");
-    //updateLocalStorage();
+    updateLocalStorage();
     console.log("local: " + localStorage);
     console.log("project: " + projectArray);
 }
 loadProjectsFromLocalStorage();
-console.log(projectArray[0].name);
 
 if(projectArray.length > 0) {
     console.log(projectArray.length);
@@ -156,19 +155,16 @@ function showErrorMessage(element) { //error message for creating project/todo
 }
 
 function loadProjectsFromLocalStorage() {
-    for (let i = 0; i < localStorage.length; i++) {
-        let itemToConvert = localStorage.getItem(localStorage.key(i));
-        projectArray[i] = JSON.parse(itemToConvert);
-    }
+        let itemToConvert = localStorage.getItem(localStorage.key("projectArray"));
+        projectArray = JSON.parse(itemToConvert);
 }
 
 function updateLocalStorage() {
     localStorage.clear();
     if(projectArray.length > 0) {
-        for(let i = 0; i < projectArray.length; i++) {
-            localStorage.setItem(i, JSON.stringify(projectArray[i]));
-        }
-    }
+            localStorage.setItem("projectArray", JSON.stringify(projectArray));
+    }  
 }
 
+console.log(projectArray);
 
