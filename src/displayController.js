@@ -33,10 +33,10 @@ const displayController = (function() {
             createTodoItem(todoCard,element);
             todoCardIndex++;
             console.log("element priority: " + element.priority);
-            if(element.priority === "High") {
+            if(element.priority === "high") {
                 todoCard.style.borderColor = "red";
             }
-            else if (element.priority === "Low") {
+            else if (element.priority === "low") {
                 todoCard.style.borderColor = "orange";
             }
 
@@ -53,12 +53,13 @@ const displayController = (function() {
         todoTitle.textContent = todoItem.title;
 
         let todoDescription = document.createElement("div");
+        todoDescription.setAttribute("id", "todo-description");
         todoDescription.textContent = todoItem.description;
 
         let todoDueDate = document.createElement("div");
         todoDueDate.textContent = todoItem.dueDate;
         let todoPriority = document.createElement("div");
-        todoPriority.textContent = todoItem.priority;
+        todoPriority.textContent = "Priority: " + todoItem.priority;
 
         let iconDiv = document.createElement("div");
 
@@ -80,9 +81,9 @@ const displayController = (function() {
         
 
         parent.appendChild(todoTitle);
-        parent.appendChild(todoDescription);
         parent.appendChild(todoDueDate);
         parent.appendChild(todoPriority);
+        parent.appendChild(todoDescription);
         parent.appendChild(iconDiv);
 
     }
@@ -174,9 +175,9 @@ const displayController = (function() {
         todoPriority.setAttribute("id", "todo-priority");
         let optionLow = document.createElement("option");
         todoPriority.appendChild(optionLow);
-        optionLow.textContent = "Low";
+        optionLow.textContent = "low";
         let optionHigh = document.createElement("option");
-        optionHigh.textContent = "High"
+        optionHigh.textContent = "high"
         todoPriority.appendChild(optionHigh);
 
 
@@ -209,8 +210,16 @@ const displayController = (function() {
         console.log("maincontainer updated");
     }
 
+    function highlightCurrentProject(currentProject) {
+        let projectNodeList = document.querySelectorAll(".project");
+        projectNodeList.forEach(element => {
+            element.style.color = "white";
+        });
+       projectNodeList[currentProject].style.color = "green";
+    }
 
-    return {displayProjectList, showProjectModal,showTodoItemModal, hidePopup, updateMainContainer};
+
+    return {displayProjectList, showProjectModal,showTodoItemModal, hidePopup, updateMainContainer, highlightCurrentProject};
 })();
 
 

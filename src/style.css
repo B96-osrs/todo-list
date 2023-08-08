@@ -55,11 +55,12 @@ body {
 .card-container {
     padding: 24px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, max-content));
+    grid-template-columns: repeat(auto-fit, minmax(15em, 20em));
     gap: 12px;
 }
 
 .todo-card {
+    height: fit-content;
     color: white;
     font-size: 16px;
     display: flex;
@@ -105,4 +106,19 @@ body {
     left: 50%;
     transform: translate(-50%,-50%);
     box-shadow: 6px 6px 12px 1px;
+}
+
+#todo-description {
+    width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 1.2em;
+    text-overflow: ellipsis;
+}
+#todo-description:hover {
+    width: 100%;
+    height: auto;
+    white-space: wrap;
+    overflow: auto;
+    text-overflow: clip;
 }
