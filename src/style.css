@@ -69,7 +69,8 @@ body {
     border-radius: 12px;
     gap: 8px;
     background-color: rgba(0, 0, 0, 0.6);
-    border-style: solid;
+    border-left: solid;
+    border-width: 0.8em;
 }
 .project-title {
     padding: 24px;

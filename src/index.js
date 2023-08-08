@@ -9,23 +9,33 @@ const createProjectButton = document.getElementById("project-button");
 let projectArray = [];
 let currentProject = 0;
 
-
 console.log("start:");
-projectArray[0] = Project("General");
-projectArray[1] = Project("Loki");
-projectArray[2] = Project("Freya");
+//localStorage.clear();
+if(localStorage.length < 1) {
+    projectArray[0] = Project("General");
+    projectArray[1] = Project("Project-1");
+    projectArray[2] = Project("Project-2");
+    
+    //example projects and todo items, only loaded if localstorage is empty
+    
+    projectArray[0].todoArray[0] = toDo("Homework","Finish the To-do Project from the JS Path using vanilla JS, HTML and CSS", "15.07.2023","high");
+    projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","low");
+    projectArray[1].todoArray[0] = toDo("Reading","Read article xzy", "15.11.2024","low");
+    projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport", "11.08.2023","high");
+    //updateLocalStorage();
+    console.log("local: " + localStorage);
+    console.log("project: " + projectArray);
+}
+loadProjectsFromLocalStorage();
+console.log(projectArray[0].name);
 
+if(projectArray.length > 0) {
+    console.log(projectArray.length);
+    displayController.displayProjectList(projectListBox, projectArray);
+    displayController.updateMainContainer(mainContainer,projectArray[0]);
+    displayController.highlightCurrentProject(currentProject);  
+}
 
-
-projectArray[0].todoArray[0] = toDo("Homework","Finish the To-do Project from the JS Path using vanilla JS, HTML and CSS", "15.07.2023","high");
-projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","low");
-projectArray[1].todoArray[0] = toDo("Reading","Read article xzy", "15.11.2024","low");
-projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport", "11.08.2023","high");
-
-
-displayController.displayProjectList(projectListBox, projectArray);
-displayController.updateMainContainer(mainContainer,projectArray[0]);
-displayController.highlightCurrentProject(currentProject);
 
 
 
@@ -53,6 +63,7 @@ createProjectButton.addEventListener("click", function(e) {
         }
         else {
         projectArray.push(Project(projectNameInput.value));
+        updateLocalStorage();
         console.log(projectArray);
         currentProject = projectArray.length - 1;
         displayController.displayProjectList(projectListBox, projectArray);
@@ -60,12 +71,11 @@ createProjectButton.addEventListener("click", function(e) {
         displayController.hidePopup();
         console.log("current project index: " + currentProject);
         displayController.highlightCurrentProject(currentProject);
-        
         }
     });
 });
 
-mainContainer.addEventListener("click",function(e) {
+mainContainer.addEventListener("click",function(e) { //delete a project
     if(e.target.matches(".delete-button")) {
         if(currentProject > 0) {
             projectArray.splice(currentProject,1);
@@ -74,11 +84,12 @@ mainContainer.addEventListener("click",function(e) {
             displayController.displayProjectList(projectListBox,projectArray);
             displayController.updateMainContainer(mainContainer,projectArray[currentProject]);
             displayController.highlightCurrentProject(currentProject);
+            updateLocalStorage();
         }
     }
 });
 
-mainContainer.addEventListener("click",function(e) {
+mainContainer.addEventListener("click",function(e) { // add todo to a project
     if(e.target.matches("#add-todo-button")) {
         displayController.showTodoItemModal(contentBox);
         const submitProjectButton = document.getElementById("submit-button");
@@ -87,16 +98,18 @@ mainContainer.addEventListener("click",function(e) {
             addTodoItem();
             displayController.hidePopup();
             displayController.updateMainContainer(mainContainer, projectArray[currentProject]);
+            updateLocalStorage();
         });
     }
 
 });
 
-mainContainer.addEventListener("click", function(e) {
-    if(e.target.matches("#todo-delete")) {
+mainContainer.addEventListener("click", function(e) { 
+    if(e.target.matches("#todo-delete")) { // delete a todo item
         let index = parseInt(e.target.dataset.key);
         projectArray[currentProject].todoArray.splice(index,1);
         displayController.updateMainContainer(mainContainer,projectArray[currentProject]);
+        updateLocalStorage();
     }
     else if(e.target.matches("#todo-check")) {
         let index = parseInt(e.target.dataset.key);
@@ -107,6 +120,7 @@ mainContainer.addEventListener("click", function(e) {
             projectArray[currentProject].todoArray[index].checkBox = "false";
         }
         displayController.updateMainContainer(mainContainer,projectArray[currentProject]);
+        updateLocalStorage();
     }
 
 
@@ -124,7 +138,7 @@ function addTodoItem() {
     projectArray[currentProject].todoArray.push(newTodoItem);
 }
 
-function showErrorMessage(element) {
+function showErrorMessage(element) { //error message for creating project/todo
     let modal = document.querySelector(".project-form");
     let errorMessage = document.createElement("div");
     errorMessage.setAttribute("style", "font-size: 0.8em; color:#ff0000;");
@@ -141,5 +155,20 @@ function showErrorMessage(element) {
     modal.appendChild(errorMessage);
 }
 
+function loadProjectsFromLocalStorage() {
+    for (let i = 0; i < localStorage.length; i++) {
+        let itemToConvert = localStorage.getItem(localStorage.key(i));
+        projectArray[i] = JSON.parse(itemToConvert);
+    }
+}
+
+function updateLocalStorage() {
+    localStorage.clear();
+    if(projectArray.length > 0) {
+        for(let i = 0; i < projectArray.length; i++) {
+            localStorage.setItem(i, JSON.stringify(projectArray[i]));
+        }
+    }
+}
 
 
