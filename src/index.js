@@ -10,7 +10,6 @@ let projectArray = [];
 let currentProject = 0;
 
 console.log("start:");
-//localStorage.clear();
 if(localStorage.length < 1) {
     projectArray[0] = Project("General");
     projectArray[1] = Project("Project-1");
@@ -20,8 +19,8 @@ if(localStorage.length < 1) {
     
     projectArray[0].todoArray[0] = toDo("Homework","Finish the To-do Project from the JS Path using vanilla JS, HTML and CSS", "15.07.2023","high");
     projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","low");
-    projectArray[1].todoArray[0] = toDo("Reading","Read article xzy", "15.11.2024","low");
-    projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport", "11.08.2023","high");
+    projectArray[1].todoArray[0] = toDo("Reading","Read article xzy and then write a blog about asdf", "15.11.2024","low");
+    projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport at 16:15 local time", "11.08.2023","high");
     updateLocalStorage();
     console.log("local: " + localStorage);
     console.log("project: " + projectArray);
