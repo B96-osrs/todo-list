@@ -162,8 +162,8 @@ function updateLocalStorage() {
 
 function loadExampleProjects() {
     projectArray[0] = Project("General");
-    projectArray[1] = Project("Project-1");
-    projectArray[2] = Project("Project-2");
+    projectArray[1] = Project("Project 1");
+    projectArray[2] = Project("Project 2");
     
     //example projects and todo items, only loaded if localstorage is empty
     
