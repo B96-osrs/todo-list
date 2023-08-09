@@ -9,21 +9,9 @@ const createProjectButton = document.getElementById("project-button");
 let projectArray = [];
 let currentProject = 0;
 
-console.log("start:");
 if(localStorage.length < 1) {
-    projectArray[0] = Project("General");
-    projectArray[1] = Project("Project-1");
-    projectArray[2] = Project("Project-2");
-    
-    //example projects and todo items, only loaded if localstorage is empty
-    
-    projectArray[0].todoArray[0] = toDo("Homework","Finish the To-do Project from the JS Path using vanilla JS, HTML and CSS", "15.07.2023","high");
-    projectArray[0].todoArray[1] = toDo("Project","Implement xy features", "20.11.2023","low");
-    projectArray[1].todoArray[0] = toDo("Reading","Read article xzy and then write a blog about asdf", "15.11.2024","low");
-    projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport at 16:15 local time", "11.08.2023","high");
+    loadExampleProjects();
     updateLocalStorage();
-    console.log("local: " + localStorage);
-    console.log("project: " + projectArray);
 }
 loadProjectsFromLocalStorage();
 
@@ -50,7 +38,6 @@ window.addEventListener("click",function(e) {
 });
 
 createProjectButton.addEventListener("click", function(e) {
-    console.log("new project clicked");
     displayController.showProjectModal(contentBox);
 
     const submitProjectButton = document.getElementById("submit-button");
@@ -67,7 +54,6 @@ createProjectButton.addEventListener("click", function(e) {
         displayController.displayProjectList(projectListBox, projectArray);
         displayController.updateMainContainer(mainContainer, projectArray[currentProject]);
         displayController.hidePopup();
-        console.log("current project index: " + currentProject);
         displayController.highlightCurrentProject(currentProject);
         }
     });
@@ -165,5 +151,15 @@ function updateLocalStorage() {
     }  
 }
 
-console.log(projectArray);
-
+function loadExampleProjects() {
+        projectArray[0] = Project("General");
+    projectArray[1] = Project("Project-1");
+    projectArray[2] = Project("Project-2");
+    
+    //example projects and todo items, only loaded if localstorage is empty
+    
+    projectArray[0].todoArray[0] = toDo("Homework","Finish the To-do Project from the JS Path using vanilla JS, HTML and CSS", "15.07.2023","high");
+    projectArray[0].todoArray[1] = toDo("Project","Read some articles on when to use Flexbox over Grid", "20.11.2023","low");
+    projectArray[1].todoArray[0] = toDo("Reading","Read article xzy and then write a blog about asdf", "15.11.2024","low");
+    projectArray[2].todoArray[0] = toDo("Airport pickup","Pick up Odin from the airport at 16:15 local time", "11.08.2023","high");
+}

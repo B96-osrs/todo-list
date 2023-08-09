@@ -2,7 +2,9 @@
     --primary:#1f2937;
     --secondary:#C9A959;
     --myGrey:#CFCECA;
-
+}
+* {
+    box-sizing: border-box;
 }
 
 .icon {
@@ -12,13 +14,14 @@
 .icon:hover {
     cursor: pointer;
     transform: scale(1.075);
+    filter: brightness(120%);
 }
-
 
 body {
     box-sizing: border-box;
     height: 100vh;
     margin: 0;
+    font-family: "Roboto", sans-serif;
 }
 
 .content {
@@ -36,20 +39,23 @@ body {
     gap: 12px;
 }
 
-.add-button {
+.button {
     border-style: none;
     padding: 12px;
     background-color: var(--secondary);
     width: 100px;
     cursor: pointer;
-
 }
-.add-button:hover {
+.button:hover {
    transform: scale(1.08);
 }
 
 .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
     font-size: 18px;
+    font-weight: bold;
 }
 
 .card-container {
@@ -61,17 +67,32 @@ body {
 
 .todo-card {
     height: fit-content;
-    color: white;
+    color:rgb(17, 16, 16);
     font-size: 16px;
     display: flex;
     flex-direction: column;
     padding: 12px;
     border-radius: 12px;
     gap: 8px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color:rgba(196, 190, 190, 0.342);
     border-left: solid;
     border-width: 0.8em;
+    outline: #1f2937;
+    outline-width: 0.2em;
+    outline-style: solid;
 }
+.todo-card div:first-child {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.icons {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 0.5em;
+    padding-top: 1em;
+    gap: 0.5em;
+}
+
 .project-title {
     padding: 24px;
     font-size: 24px;
@@ -122,4 +143,31 @@ body {
     white-space: wrap;
     overflow: auto;
     text-overflow: clip;
+}
+#project-button {
+    padding: 1em;
+    font-weight: bold;
+    width: 60%;
+    border-radius: 0.5em;
+}
+
+#add-todo-button,
+#delete-button {
+    display: flex;
+    align-self: center;
+    padding: 1em;
+    font-weight: bold;
+    border-radius: 0.5em;
+    height: 60%;
+    background-color: var(--primary);
+    color: white;
+    margin-right: 1em;
+    width: max-content;
+}
+
+#delete-button:hover {
+    color: rgb(141, 38, 38);
+}
+#add-todo-button:hover {
+    color: rgb(26, 95, 26);
 }

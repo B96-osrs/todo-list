@@ -1,6 +1,7 @@
 import imageTrash from "./img/trash.svg";
 import imageCheckBox from "./img/checkBox.svg";
-import format, { endOfDay } from 'date-fns'
+const secondaryColor = "#C9A959";
+const colorRed = "#BB0404";
 
 
 const displayController = (function() {
@@ -34,7 +35,7 @@ const displayController = (function() {
             todoCardIndex++;
             console.log("element priority: " + element.priority);
             if(element.priority === "high") {
-                todoCard.style.borderColor = "red";
+                todoCard.style.borderColor = colorRed;
             }
             else if (element.priority === "low") {
                 todoCard.style.borderColor = "orange";
@@ -62,6 +63,7 @@ const displayController = (function() {
         todoPriority.textContent = "Priority: " + todoItem.priority;
 
         let iconDiv = document.createElement("div");
+        iconDiv.classList.add("icons");
 
         let todoCheckIcon = document.createElement("img");
         todoCheckIcon.classList.add("icon");
@@ -98,11 +100,13 @@ const displayController = (function() {
         projectName.textContent = project.name;
 
         let projectDeleteButton = document.createElement("button");
-        projectDeleteButton.classList.add("delete-button");
+        projectDeleteButton.setAttribute("id", "delete-button");
+        projectDeleteButton.classList.add("button");
         projectDeleteButton.textContent = "Delete Project";
 
         let projectAddTodoButton = document.createElement("button");
         projectAddTodoButton.setAttribute("id","add-todo-button");
+        projectAddTodoButton.setAttribute("class","button");
         projectAddTodoButton.textContent = "Add To-do List";
 
 
@@ -215,7 +219,7 @@ const displayController = (function() {
         projectNodeList.forEach(element => {
             element.style.color = "white";
         });
-       projectNodeList[currentProject].style.color = "green";
+       projectNodeList[currentProject].style.color = secondaryColor;
     }
 
 
