@@ -62,7 +62,7 @@ body {
     padding: 24px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15em, 20em));
-    gap: 12px;
+    gap: 1em;
 }
 
 .todo-card {
@@ -73,13 +73,14 @@ body {
     flex-direction: column;
     padding: 12px;
     border-radius: 12px;
-    gap: 8px;
+    gap: 0.3em;
     background-color:rgba(196, 190, 190, 0.342);
     border-left: solid;
     border-width: 0.8em;
     outline: #1f2937;
     outline-width: 0.2em;
     outline-style: solid;
+    box-shadow: 1px 1px 12px 1px;
 }
 .todo-card div:first-child {
     font-size: 1.1em;
@@ -170,4 +171,18 @@ body {
 }
 #add-todo-button:hover {
     color: rgb(26, 95, 26);
+}
+.footer {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 0.5em;
+    display: flex;
+    margin-top: auto;
+    justify-content: center;
+    color: white;
+    font-size: 1em;
+}
+a {
+    text-decoration: underline;
+    color: inherit;
+    font-weight: bold;
 }
