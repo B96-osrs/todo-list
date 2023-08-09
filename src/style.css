@@ -25,12 +25,12 @@ body {
 }
 
 .content {
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 240px 1fr;
 }
 
 .sidebar {
-    height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: var(--primary);
@@ -62,7 +62,7 @@ body {
     padding: 24px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15em, 20em));
-    gap: 1em;
+    gap: 1.5em;
 }
 
 .todo-card {
@@ -128,7 +128,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    box-shadow: 6px 6px 12px 1px;
+    box-shadow: 1px 1px 12px 1px;
+    font-weight: bold;
 }
 
 #todo-description {
@@ -145,10 +146,11 @@ body {
     overflow: auto;
     text-overflow: clip;
 }
-#project-button {
+#project-button,
+#submit-button {
     padding: 1em;
     font-weight: bold;
-    width: 60%;
+    width:max-content;
     border-radius: 0.5em;
 }
 
@@ -174,7 +176,7 @@ body {
 }
 .footer {
     background-color: rgba(0, 0, 0, 0.9);
-    padding: 0.5em;
+    padding: 0.7em;
     display: flex;
     margin-top: auto;
     justify-content: center;
@@ -185,4 +187,11 @@ a {
     text-decoration: underline;
     color: inherit;
     font-weight: bold;
+}
+
+input {
+    height: 2em;
+    border-radius: 0.3em;
+    outline: none;
+    border-style: none;
 }

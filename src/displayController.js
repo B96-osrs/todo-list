@@ -137,6 +137,7 @@ const displayController = (function() {
 
         let projectSubmitButton = document.createElement("button");
         projectSubmitButton.setAttribute("id", "submit-button");
+        projectSubmitButton.classList.add("button");
         projectSubmitButton.textContent = "Add Project";
 
         projectModal.appendChild(projectInputLabel);
@@ -161,7 +162,7 @@ const displayController = (function() {
         todoDescriptionLabel.textContent = "Description";
         let todoDescription = document.createElement("input");
         todoDescription.setAttribute("type", "text");
-        todoDescription.setAttribute("id", "todo-description");
+        todoDescription.setAttribute("id", "todo-description-input");
 
         let todoDueDateLabel = document.createElement("label");
         todoDueDateLabel.setAttribute("for", "todo-date");
@@ -187,6 +188,7 @@ const displayController = (function() {
 
         let todoSubmitButton = document.createElement("button");
         todoSubmitButton.setAttribute("id", "submit-button");
+        todoSubmitButton.classList.add("button");
         todoSubmitButton.textContent = "Add Todo";
 
         todoModal.appendChild(todoTitleLabel);
@@ -222,8 +224,20 @@ const displayController = (function() {
        projectNodeList[currentProject].style.color = secondaryColor;
     }
 
+    function blurBackground(parent,blur) {
+        if(blur === "blur") {
+            parent.style.webkitFilter = "blur(3px)";
+        }
+        else {
+            parent.style.webkitFilter = "blur(0px)";
+        }
 
-    return {displayProjectList, showProjectModal,showTodoItemModal, hidePopup, updateMainContainer, highlightCurrentProject};
+    }
+
+
+    return {displayProjectList, showProjectModal,showTodoItemModal,
+            hidePopup, updateMainContainer, highlightCurrentProject,
+            blurBackground};
 })();
 
 

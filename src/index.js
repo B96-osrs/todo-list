@@ -37,8 +37,9 @@ window.addEventListener("click",function(e) {
     }
 });
 
-createProjectButton.addEventListener("click", function(e) {
+createProjectButton.addEventListener("click", function(e) { //eventlistener for new project button
     displayController.showProjectModal(contentBox);
+    displayController.blurBackground(mainContainer,"blur");
 
     const submitProjectButton = document.getElementById("submit-button");
     submitProjectButton.addEventListener("click", function(e) {
@@ -55,6 +56,7 @@ createProjectButton.addEventListener("click", function(e) {
         displayController.updateMainContainer(mainContainer, projectArray[currentProject]);
         displayController.hidePopup();
         displayController.highlightCurrentProject(currentProject);
+        displayController.blurBackground(mainContainer,"noblur");
         }
     });
 });
@@ -73,19 +75,20 @@ mainContainer.addEventListener("click",function(e) { //delete a project
     }
 });
 
-mainContainer.addEventListener("click",function(e) { // add todo to a project
+mainContainer.addEventListener("click",function(e) { // add todo-item
     if(e.target.matches("#add-todo-button")) {
         displayController.showTodoItemModal(contentBox);
+        displayController.blurBackground(mainContainer,"blur");
         const submitProjectButton = document.getElementById("submit-button");
 
         submitProjectButton.addEventListener("click", function(e) {
-            addTodoItem();
-            displayController.hidePopup();
-            displayController.updateMainContainer(mainContainer, projectArray[currentProject]);
-            updateLocalStorage();
+                addTodoItem();
+                displayController.hidePopup();
+                displayController.updateMainContainer(mainContainer, projectArray[currentProject]);
+                updateLocalStorage();
+                displayController.blurBackground(mainContainer,"noblur");           
         });
     }
-
 });
 
 mainContainer.addEventListener("click", function(e) { 
@@ -114,7 +117,13 @@ mainContainer.addEventListener("click", function(e) {
 
 function addTodoItem() {
     let inputTitle = document.getElementById("todo-title").value;
-    let inputDescription = document.getElementById("todo-description").value;
+    if(inputTitle.toString() < 1) {
+        inputTitle = `Title ${projectArray[currentProject].todoArray.length + 1}`;
+    }
+    let inputDescription = document.getElementById("todo-description-input").value;
+    if(inputDescription.toString() < 1) {
+        inputDescription = `Description ${projectArray[currentProject].todoArray.length + 1}`;
+    }
     let inputDueDate = document.getElementById("todo-date").value;
     let inputPriority = document.getElementById("todo-priority").value;
 
