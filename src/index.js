@@ -62,7 +62,7 @@ createProjectButton.addEventListener("click", function(e) { //eventlistener for 
 });
 
 mainContainer.addEventListener("click",function(e) { //delete a project
-    if(e.target.matches(".delete-button")) {
+    if(e.target.matches("#delete-button")) {
         if(currentProject > 0) {
             projectArray.splice(currentProject,1);
             console.log(projectArray);
