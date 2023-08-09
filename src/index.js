@@ -135,17 +135,10 @@ function showErrorMessage(element) { //error message for creating project/todo
     let modal = document.querySelector(".project-form");
     let errorMessage = document.createElement("div");
     errorMessage.setAttribute("style", "font-size: 0.8em; color:#ff0000;");
-    if(element === "project") {
+    if(element === "project" && modal.lastChild.nodeName !== "DIV") {
         errorMessage.textContent = "Please enter Project Name";
+        modal.appendChild(errorMessage);
     }
-
-    else if(element === "todo") {
-        errorMessage.textContent = "Please fill out all fields";
-    }
-    else {
-        errorMessage.textContent = "Error";
-    }
-    modal.appendChild(errorMessage);
 }
 
 function loadProjectsFromLocalStorage() {
